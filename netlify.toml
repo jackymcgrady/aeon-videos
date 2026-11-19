@@ -1,0 +1,38 @@
+# Static site, no build step. Netlify installs package.json deps (only @netlify/blobs, for the function).
+[build]
+  publish = "."
+  command = ""
+  functions = "netlify/functions"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# The page probes /api/state on load: server.py answers locally, this function answers on Netlify.
+[[redirects]]
+  from = "/api/state"
+  to = "/.netlify/functions/state"
+  status = 200
+  force = true
+
+# Never publish the local-only files.
+[[redirects]]
+  from = "/server.py"
+  to = "/404"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/update.sh"
+  to = "/404"
+  status = 404
+  force = true
+[[redirects]]
+  from = "/state.json"
+  to = "/404"
+  status = 404
+  force = true
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

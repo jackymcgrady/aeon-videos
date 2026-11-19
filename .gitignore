@@ -1,0 +1,6 @@
+state.json
+state.json.*
+.state-*.tmp
+node_modules/
+.netlify/
+__pycache__/

@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Aeon Videos — a private screening room</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%239D1D20'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='20' text-anchor='middle' fill='white'%3EA%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#grid">Skip to the videos</a>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="account" id="account" role="group" aria-label="Account" hidden></div>
+    <p class="kicker">A private screening room</p>
+    <h1 class="title">Aeon <em>Videos</em></h1>
+    <p class="standfirst" id="standfirst">Short documentaries and animations on ideas, science and culture, curated by Aeon.</p>
+  </div>
+</header>
+
+<div class="toolbar" id="toolbar">
+  <div class="wrap toolbar-inner">
+    <label class="search">
+      <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+      <input id="q" type="search" placeholder="Search — try: octopus, &quot;free will&quot;, -war" autocomplete="off" spellcheck="false" aria-label="Search titles and abstracts. Words must all match; put - before a word to exclude it; use quotes for a phrase.">
+      <kbd>/</kbd>
+    </label>
+    <div class="controls">
+      <div class="seg views" id="views" role="group" aria-label="Show"></div>
+      <label class="switch"><input type="checkbox" id="hidew"><span>Hide watched</span></label>
+    </div>
+  </div>
+  <div class="wrap filters">
+    <div class="chips" id="chips" role="group" aria-label="Filter by category"></div>
+    <div class="lengths" id="lengths" role="group" aria-label="Filter by length"></div>
+    <select class="year" id="year" aria-label="Filter by year"></select>
+  </div>
+  <div class="wrap topics" id="topics" role="group" aria-label="Filter by topic"></div>
+</div>
+
+<main class="wrap" id="main">
+  <div class="statusbar">
+    <p class="status" id="status" aria-live="polite"></p>
+    <div class="tools">
+      <div class="seg" id="sort" role="group" aria-label="Sort by date">
+        <button type="button" data-sort="desc" aria-pressed="true">Newest</button>
+        <button type="button" data-sort="asc" aria-pressed="false">Oldest</button>
+      </div>
+      <label class="switch"><input type="checkbox" id="group"><span>Group by category</span></label>
+      <button type="button" class="ghost" id="shuffle" title="Open a random unwatched video from the current list">Surprise me</button>
+    </div>
+  </div>
+  <div id="grid" class="grid"></div>
+  <div id="sentinel" aria-hidden="true"></div>
+  <div class="empty" id="empty" hidden>
+    <p class="empty-title">Nothing matches.</p>
+    <p id="empty-hint">Try fewer words, or clear the filters.</p>
+    <button type="button" class="ghost" id="reset">Clear search and filters</button>
+  </div>
+</main>
+
+<footer class="colophon">
+  <div class="wrap">
+    <p>Titles, abstracts and images belong to <a href="https://aeon.co/videos" target="_blank" rel="noopener">Aeon</a> and the filmmakers. Every card opens the original page on aeon.co.</p>
+    <p class="legal">Data and abstracts © Aeon Media Group, quoted for non-commercial personal use. The films are hosted on YouTube and Vimeo by their creators and embedded from there; nothing is re-hosted here. Watch and read the originals at <a href="https://aeon.co" target="_blank" rel="noopener">aeon.co</a>. Not affiliated with Aeon.</p>
+    <p class="fine"><span id="fine"></span> <span id="sync"></span></p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" hidden></div>
+<button type="button" class="totop" id="totop" aria-label="Back to top" hidden>↑</button>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

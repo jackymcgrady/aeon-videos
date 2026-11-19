@@ -1,0 +1,11 @@
+{
+  "name": "aeon-videos",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A searchable screening room for Aeon's video archive, with per-user favorites and watched marks on Netlify.",
+  "license": "MIT",
+  "engines": { "node": ">=22.12.0" },
+  "dependencies": {
+    "@netlify/blobs": "^11.1.9"
+  }
+}
