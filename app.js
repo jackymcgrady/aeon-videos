@@ -588,10 +588,28 @@
     if (el) scrollTo(0, el.getBoundingClientRect().top + scrollY - resume.anchor.off);
   }
 
+  // ── login is attached to actions, never to browsing ──
+  // On the Netlify deploy a logged-out favorite/watched tap still works at once (kept in this browser);
+  // the first such tap of the session adds one quiet offer to log in and sync. Never more than once a session.
+  var NUDGE_KEY = "aeon-videos:sync-nudge";
+  function nudgeLogin() {
+    var s = Marks.status();
+    if (!identityWidget || s.account || !s.identity) return;
+    try { if (sessionStorage.getItem(NUDGE_KEY)) return; sessionStorage.setItem(NUDGE_KEY, "1"); } catch (e) { if (nudgeLogin.done) return; }
+    nudgeLogin.done = true;
+    clearTimeout(toastTimer);
+    toastEl.classList.add("nudge");
+    toastEl.innerHTML = '<span>Saved in this browser. Log in to sync across your devices.</span><button type="button" data-tact="login">Log in</button><button type="button" class="x" data-tact="close" aria-label="Dismiss">×</button>';
+    delete toastEl.dataset.url;
+    toastEl.hidden = false;
+    toastTimer = setTimeout(function () { toastEl.hidden = true; }, 9000);
+  }
+
   // ── "did you finish it?" — offered when you come back from a film you opened ──
   var opened = null, toastTimer;
   function showToast(x) {
     clearTimeout(toastTimer);
+    toastEl.classList.remove("nudge");
     toastEl.innerHTML = '<span>Finished <i>' + esc(x.v.title) + '</i>?</span><button type="button" data-tact="watch">Mark watched</button><button type="button" class="x" data-tact="close" aria-label="Dismiss">×</button>';
     toastEl.dataset.url = x.v.url;
     toastEl.hidden = false;
@@ -600,6 +618,7 @@
   toastEl.addEventListener("click", function (e) {
     var b = e.target.closest("button"); if (!b) return;
     if (b.dataset.tact === "watch") { Marks.set(toastEl.dataset.url, "watched", true); refreshMarks(); }
+    else if (b.dataset.tact === "login" && identityWidget) identityWidget.open("login");
     toastEl.hidden = true;
   });
   document.addEventListener("visibilitychange", function () {
@@ -633,8 +652,10 @@
     var a = e.target.closest(".act");
     if (a) {
       var u = ALL[+a.closest(".card").dataset.i].v.url, field = a.dataset.act;
-      Marks.set(u, field, field === "favorite" ? !Marks.isFav(u) : !Marks.isWatched(u));
+      var on = field === "favorite" ? !Marks.isFav(u) : !Marks.isWatched(u);
+      Marks.set(u, field, on);
       refreshMarks();
+      if (on) nudgeLogin();
       return;
     }
     var link = e.target.closest("a[href]");

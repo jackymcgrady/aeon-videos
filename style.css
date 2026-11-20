@@ -322,6 +322,7 @@ mark { background: color-mix(in srgb, var(--red) 18%, transparent); color: inher
 .toast[hidden] { display: none; }
 .toast span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 .toast i { font-family: var(--serif); }
+.toast.nudge span { white-space: normal; }
 .toast button { flex: none; border: 0; border-radius: 999px; cursor: pointer; padding: .55rem .95rem; background: var(--red); color: #fff; font-size: .82rem; font-weight: 600; }
 .toast button.x { background: transparent; color: var(--paper); padding: .55rem .7rem; font-size: 1.1rem; line-height: 1; }
 .flash { animation: flash 1.6s ease; }

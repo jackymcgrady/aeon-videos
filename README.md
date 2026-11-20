@@ -16,6 +16,10 @@ The page decides by itself: served over http(s) it asks `GET /api/state`. `serve
 state; on Netlify the function answers `{"auth":"identity"}`, so the page loads the Identity widget and shows
 **Log in / Sign up**. If neither answers, the marks simply stay in the browser — no error.
 
+Login never blocks browsing. On Netlify a logged-out favorite/watched tap works at once (kept in the
+browser); the first such tap in a browser session shows one small "Log in to sync across your devices"
+offer, and never again that session. Logging in adopts the marks made while logged out into the account.
+
 ### Netlify pieces
 
 - `netlify-identity-widget` (loaded from `identity.netlify.com`, only on the Netlify deploy) — sign-up, log-in,
